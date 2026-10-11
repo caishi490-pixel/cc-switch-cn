@@ -221,7 +221,7 @@ export function UsageTrendChart({
     metric === "cost" ? fmtUsd(value, 4) : fmtInt(value, dateLocale);
   const formatYTick = (value: unknown) =>
     metric === "cost"
-      ? `$${parseFiniteNumber(value) ?? 0}`
+      ? fmtUsd(value, 2)
       : formatUsageTrendTokenTickLabel(value, tokenTickFormatter);
 
   const renderTooltip = ({ active, payload }: any) => {

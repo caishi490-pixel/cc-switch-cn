@@ -10,6 +10,7 @@ import {
   type ReaderStyleId,
 } from "./agentStyles";
 import type { MergedStep, SessionTurn, TimelineStep, ToolStep } from "./turns";
+import { COST_RATE_FROM_USD, COST_SYMBOL } from "@/components/usage/format";
 
 /**
  * 步骤 / 轮的一行摘要与各 Agent 合并规则。
@@ -120,11 +121,12 @@ export const formatTokens = (tokens: number): string => {
   return `${Number((tokens / 1_000_000).toFixed(1))}M`;
 };
 
-/** $0.0081 / $0.012 / $1.25 */
+/** 阿米改造：¥ 计价（USD 成本 × 汇率）。¥0.058 / ¥0.086 / ¥9 */
 export const formatCost = (usd: number): string => {
-  if (usd < 0.01) return `$${Number(usd.toFixed(4))}`;
-  if (usd < 1) return `$${Number(usd.toFixed(3))}`;
-  return `$${usd.toFixed(2)}`;
+  const cny = usd * COST_RATE_FROM_USD;
+  if (usd < 0.01) return `${COST_SYMBOL}${Number(cny.toFixed(4))}`;
+  if (usd < 1) return `${COST_SYMBOL}${Number(cny.toFixed(3))}`;
+  return `${COST_SYMBOL}${cny.toFixed(2)}`;
 };
 
 const escapeRegExp = (text: string) =>

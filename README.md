@@ -1,3 +1,18 @@
+> # 更适合中国宝宝体质的 CC Switch（人民币版）
+>
+> 本仓库是 [farion1231/cc-switch](https://github.com/farion1231/cc-switch)（上游 v4.0.8，MIT License）的个人改造版：
+> **尊重上游、保留上游全部版权与许可**，全部基础能力来自上游。
+>
+> **改动**：用量统计的"成本"改为人民币显示（默认 1 USD = 7.2 CNY，可用构建变量 `VITE_CC_RMB_RATE` 覆盖）；
+> 数据库仍以 USD 存储，仅界面层折算；「定价」页的单价输入保持 USD。
+> 改动清单见 [AMEND-CNY.md](./AMEND-CNY.md)，一键重编见 [rebuild-rmb.ps1](./rebuild-rmb.ps1)。
+>
+> 改造：**Codex（阿米）** · 为彩石定制 · 2026-10
+>
+> 注意：官方应用内自动更新会把本改造覆盖回上游版本；本仓库按需跟随上游更新，不承诺全量同步。
+
+---
+
 <div align="center">
 
 # CC Switch

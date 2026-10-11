@@ -21,6 +21,21 @@ export function fmtInt(
   return new Intl.NumberFormat(locale).format(Math.trunc(num));
 }
 
+/**
+ * 阿米改造（cc-switch-rmb）：成本显示币种换算。
+ * 数据库仍以 USD 存储；展示层按汇率折算成人民币。
+ * 默认 7.2，构建时可用环境变量 VITE_CC_RMB_RATE 覆盖。
+ */
+export const COST_RATE_FROM_USD = (() => {
+  const raw = Number(
+    (import.meta as unknown as { env?: Record<string, string> }).env
+      ?.VITE_CC_RMB_RATE,
+  );
+  return Number.isFinite(raw) && raw > 0 ? raw : 7.2;
+})();
+
+export const COST_SYMBOL = "¥";
+
 export function fmtUsd(
   value: unknown,
   digits: number,
@@ -28,7 +43,8 @@ export function fmtUsd(
 ): string {
   const num = parseFiniteNumber(value);
   if (num == null) return fallback;
-  return `$${num.toFixed(digits)}`;
+  // 阿米改造：USD -> CNY 显示（函数名保留，调用点不受影响）
+  return `${COST_SYMBOL}${(num * COST_RATE_FROM_USD).toFixed(digits)}`;
 }
 
 /** 输出少于这个数的请求（工具调用这类）不算速度：0.1 秒回 15 个 token 会算出离谱的数。 */

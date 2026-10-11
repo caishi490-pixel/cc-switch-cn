@@ -22,6 +22,7 @@ import {
   SPEED_ESTIMATE_MIN_OUTPUT_TOKENS,
   SPEED_MIN_OUTPUT_TOKENS,
   fmtInt,
+  fmtUsd,
   formatEstimatedTokensPerSecond,
   formatOutputTokensPerSecond,
   getLocaleFromLanguage,
@@ -84,7 +85,7 @@ function DetailSection({ title, rows }: { title: string; rows: DetailRow[] }) {
 
 const usd = (value: string) => {
   const num = parseFiniteNumber(value);
-  return num == null ? "--" : `$${num.toFixed(4)}`;
+  return num == null ? "--" : fmtUsd(num, 4);
 };
 
 function useDetailSections(request: RequestLog) {
@@ -222,7 +223,7 @@ function useDetailSections(request: RequestLog) {
     muted: unpriced,
     title: unpriced
       ? undefined
-      : `$${parseFiniteNumber(request.totalCostUsd)?.toFixed(6) ?? "--"}`,
+      : fmtUsd(request.totalCostUsd, 6),
   });
 
   let performance: DetailRow[];
